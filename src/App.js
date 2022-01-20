@@ -1,24 +1,34 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState } from "react";
+import AddProduct from "./Components/AddProduct";
+import ProductsList from "./Components/ProductsList";
 
 function App() {
+  const [allProducts, setAllProducts] = useState([]);
+
+  function addProduct(newProduct) {
+    setAllProducts([...allProducts, newProduct]);
+
+  }
+
+  function deleteProduct(id) {
+    let arr = [...allProducts];
+    arr = arr.filter(item => {
+      return item.id !== id
+    })
+    setAllProducts(arr);
+  }
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <>
+    <div className="container">
+      <AddProduct
+      addProduct={addProduct}
+      />
+      <ProductsList
+      allProducts={allProducts}
+      deleteProduct ={deleteProduct}
+      />
     </div>
+    </>
   );
 }
 
